@@ -1,0 +1,50 @@
+{% extends 'invoice/base.html' %}
+{% load crispy_forms_tags %}
+
+
+{% block main %}
+{% if invoice_number %}
+    <h1>
+        Invoice generator
+    </h1>
+{% else %}
+    <h1>
+       no invoice number found
+    </h1>
+{% endif %}
+
+<form method="POST">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="firstname">First Name</label>
+        <input type="text" class="form-control" id="firstname" aria-describedby="Client first name" placeholder="Enter Name">
+        <!-- <small id="firstnameHelp" class="form-text text-muted">Client's first name</small> -->
+    </div>
+    <div class="form-group">
+        <label for="lastname">Last Name</label>
+        <input type="text" class="form-control" id="lastname" aria-describedby="Client Last name" placeholder="Enter Last Name">
+        <!-- <small id="lastnameHelp" class="form-text text-muted">Client's last name</small> -->
+    </div>
+    <div class="form-group form-date">
+        <label class="form-date-label" for="exampledate1">Visit day</label>
+        <input type="date" class="form-date-input" id="exampledate1">
+    </div>
+    <div class="form-group form-time">
+        <label class="form-time-label" for="exampletime1">Appointment time began at</label>
+        <input type="time" class="form-time-input" id="exampletime1">
+    </div>
+    <div class="form-group form-time">
+        <label class="form-time-label" for="exampletime2">Appointment time ended at</label>
+        <input type="time" class="form-time-input" id="exampletime2">
+    </div>
+    <div class="form-group form-list">
+        <label class="form-list-label" for="doctor">with doctor</label>
+        <input type="select" class="form-list-input" id="doctor">
+    </div>
+    <div class="form-group form-list">
+        <label class="form-list-label" for="doctor">with doctor</label>
+        <input type="select" class="form-list-input" id="doctor">
+    </div>
+    <button type="submit" class="btn btn-primary">Genarate Invoice</button>
+    </form>
+{% endblock %}
