@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, reverse
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
-from invoice.models import Client
+from invoice.models import Client, Doctor
 
 
 @login_required(login_url='/admin/login/')
@@ -17,16 +17,23 @@ def index(request):
 def getinfo(request):
     client_id = request.POST['client']
     client = Client.objects.get(pk=client_id)
+    doctor_list = Doctor.objects.all()
     context = {
         'client': client,
+        'doctor_list': doctor_list,
     }
     return HttpResponse(render(request, 'invoice/getinfo.html', context))
 
-@login_required(login_url='/admin/login/')
-def number(request, invoice_number):
-    # pylint: disable=no-member
-    # latest_question_list = Question.objects.order_by('-pub_date')[:5]
+def generateinvoice(request):
+    print(request.POST)
+    client = request.POST['client']
+    insurance = request.POST['insurance']
+    payment = request.POST['payment']
+    doctor = Doctor.objects.get(pk=request.POST['doctor'])
     context = {
-        'invoice_number': invoice_number,
+        'client': client,
+        'insurance': insurance,
+        'payment': payment,
+        'doctor': doctor,
     }
-    return HttpResponse(render(request, 'invoice/number.html', context))
+    return HttpResponse(render(request, 'invoice/generateinvoice.html', context))

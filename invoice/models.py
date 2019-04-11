@@ -25,8 +25,7 @@ class Doctor(models.Model):
         ('Emma Watson', 'emmawatson'),
         ('Snoop Dog', 'snoopdog'),
     )
-    name = models.CharField(max_length=200)
-    # insurance = models.CharField(max_length=20, choices=INSRURANCES)
+    name = models.CharField(max_length=200, choices=DOCTORS)
 
     def __str__(self):
         return self.name

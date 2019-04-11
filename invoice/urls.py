@@ -4,5 +4,6 @@ from . import views
 app_name = 'invoice'
 urlpatterns = [
     path('', views.index, name='index'),
-    path('getinfo', views.getinfo, name='number'),
+    path('getinfo', views.getinfo, name='getinfo'),
+    path('generateinvoice', views.generateinvoice, name='generateinvoice'),
 ]
