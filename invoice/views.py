@@ -21,16 +21,19 @@ def getinfo(request):
     context = {
         'client': client,
         'doctor_list': doctor_list,
+        'client_id': client_id,
     }
     return HttpResponse(render(request, 'invoice/getinfo.html', context))
 
 def generateinvoice(request):
     # print(request.POST)
     client = request.POST['client']
+    client_id = request.POST['client_id']
+    print('client id is: ', client_id)
     insurance = request.POST['insurance']
     payment = request.POST['payment']
     doctor = Doctor.objects.get(pk=request.POST['doctor'])
-    _get_available_dates(doctor=request.POST['doctor'])
+    _get_available_dates(doctor=request.POST['doctor'], client_id=client_id, insurance=insurance)
     context = {
         'client': client,
         'insurance': insurance,
@@ -39,8 +42,12 @@ def generateinvoice(request):
     }
     return HttpResponse(render(request, 'invoice/generateinvoice.html', context))
 
-def _get_available_dates(doctor, client):
-    print(doctor)
-    all_invoices = Invoice.objects.filter(doctor=doctor)
+def _get_available_dates(doctor, client_id, insurance):
+    client = Client.objects.get(pk=client_id)
+    print(doctor, client.insurance)
+    clients_in_insurance = Client.objects.filter(insurance=insurance)
+    for client in clients_in_insurance:
+        print(client.name, client.insurance)
+    all_invoices = Invoice.objects.filter(doctor=doctor, client_id__in=clients_in_insurance)
     for invoice in all_invoices:
         print(invoice.pub_date)

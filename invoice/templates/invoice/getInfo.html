@@ -9,6 +9,7 @@
     <div class="form-group form-text">
         <label class="form-date-label" for="client">Client name</label>
         <input type="text" class="form-date-input" name="client" id="name" value="{{ client.name }}" readonly>
+        <input type="hidden" name="client_id" id="client_id" value="{{ client.id }}" readonly/>
     </div>
     <div class="form-group form-text">
         <label class="form-date-label" for="insurance">Insurance</label>

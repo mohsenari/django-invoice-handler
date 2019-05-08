@@ -5,8 +5,11 @@ from django.db import models
 class Invoice(models.Model):
     invoice_number = models.CharField(max_length=200)
     pub_date = models.DateTimeField('date published')
-    client_name = models.ForeignKey('Client', on_delete=models.CASCADE, default='unnamed')
+    client = models.ForeignKey('Client', on_delete=models.CASCADE, default='unnamed')
     doctor = models.ForeignKey('Doctor', on_delete=models.CASCADE, default=0)
+
+    def __str__(self):
+        return self.invoice_number
 
 class Client(models.Model):
     name = models.CharField(max_length=200)
