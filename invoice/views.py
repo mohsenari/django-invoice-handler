@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, reverse
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
-from invoice.models import Client, Doctor
+from invoice.models import Client, Doctor, Invoice
 
 
 @login_required(login_url='/admin/login/')
@@ -25,11 +25,12 @@ def getinfo(request):
     return HttpResponse(render(request, 'invoice/getinfo.html', context))
 
 def generateinvoice(request):
-    print(request.POST)
+    # print(request.POST)
     client = request.POST['client']
     insurance = request.POST['insurance']
     payment = request.POST['payment']
     doctor = Doctor.objects.get(pk=request.POST['doctor'])
+    _get_available_dates(doctor=request.POST['doctor'])
     context = {
         'client': client,
         'insurance': insurance,
@@ -37,3 +38,9 @@ def generateinvoice(request):
         'doctor': doctor,
     }
     return HttpResponse(render(request, 'invoice/generateinvoice.html', context))
+
+def _get_available_dates(doctor, client):
+    print(doctor)
+    all_invoices = Invoice.objects.filter(doctor=doctor)
+    for invoice in all_invoices:
+        print(invoice.pub_date)

@@ -5,27 +5,19 @@ from django.db import models
 class Invoice(models.Model):
     invoice_number = models.CharField(max_length=200)
     pub_date = models.DateTimeField('date published')
-
+    client_name = models.ForeignKey('Client', on_delete=models.CASCADE, default='unnamed')
+    doctor = models.ForeignKey('Doctor', on_delete=models.CASCADE, default=0)
 
 class Client(models.Model):
-    INSRURANCES = (
-        ('Desjardins', 'desjardins'),
-        ('Sun Life', 'sunlife'),
-        ('Manulife', 'manulife'),
-    )
     name = models.CharField(max_length=200)
-    insurance = models.CharField(max_length=20, choices=INSRURANCES)
+    insurance = models.CharField(max_length=20)
 
     def __str__(self):
         return self.name
 
+
 class Doctor(models.Model):
-    DOCTORS = (
-        ('Bob Marley', 'bobmarly'),
-        ('Emma Watson', 'emmawatson'),
-        ('Snoop Dog', 'snoopdog'),
-    )
-    name = models.CharField(max_length=200, choices=DOCTORS)
+    name = models.CharField(max_length=200)
 
     def __str__(self):
         return self.name
