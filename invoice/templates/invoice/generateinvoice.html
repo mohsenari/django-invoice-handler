@@ -29,8 +29,11 @@
         <div class="form-group form-select">
             <label class="form-date-label" for="doctor">Appointment</label>
             <select name="appointment">
+                {% for date in dates %}
+                    <option value="{{ date.id }}">{{ date.date }}</option>
+                {% endfor %}
                 <!-- this needs to be changed to available dates send in context from views -->
-                <option value="1">Wednesday April 10th 2:00 PM - 3:00 PM, 2019</option>
+                <!-- <option value="1">Wednesday April 10th 2:00 PM - 3:00 PM, 2019</option> -->
             </select>
         </div>
     <!-- <div class="form-group form-date">
