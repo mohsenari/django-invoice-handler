@@ -5,7 +5,6 @@ from django.contrib.auth.decorators import login_required
 from invoice.models import Client, Doctor, Invoice, Appointment
 from datetime import datetime
 from .render import render_to_pdf
-from .pdf import draw_pdf
 
 
 @login_required(login_url='/admin/login/')
