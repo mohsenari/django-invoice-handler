@@ -11,31 +11,37 @@
 <form method="POST" action='/invoice/makepdf'>
     {% csrf_token %}
     <div class="form-group form-text">
-            <label class="form-date-label" for="client">Client name</label>
-            <input type="text" class="form-date-input" name="client" value="{{ client }}" readonly />
-        </div>
-        <div class="form-group form-text">
-            <label class="form-date-label" for="insurance">Insurance</label>
-            <input type="text" class="form-date-input" name="insurance" value="{{ insurance }}" readonly />
-        </div>
-        <div class="form-group form-text">
-            <label class="form-date-label" for="payment">Payment amount</label>
-            <input type="number" class="form-date-input" name="payment" value="{{ payment }}" readonly />
-        </div>
-        <div class="form-group form-text">
-            <label class="form-date-label" for="doctor">Doctor</label>
-            <input type="text" class="form-date-input" name="doctor" value="{{ doctor }}" readonly />
-        </div>
-        <div class="form-group form-select">
-            <label class="form-date-label" for="doctor">Appointment</label>
-            <select name="appointment">
-                {% for date in dates %}
-                    <option value="{{ date.id }}">{{ date.date }}</option>
-                {% endfor %}
-                <!-- this needs to be changed to available dates send in context from views -->
-                <!-- <option value="1">Wednesday April 10th 2:00 PM - 3:00 PM, 2019</option> -->
-            </select>
-        </div>
+        <label class="form-date-label" for="client">Invoice title</label>
+        <input type="text" class="form-date-input" name="invoice_name" />
+    </div>
+    <div class="form-group form-text">
+        <label class="form-date-label" for="client">Client name</label>
+        <input type="text" class="form-date-input" name="client" value="{{ client }}" readonly />
+        <input type="hidden" name="client_id" value="{{ client_id }}" readonly/>
+    </div>
+    <div class="form-group form-text">
+        <label class="form-date-label" for="insurance">Insurance</label>
+        <input type="text" class="form-date-input" name="insurance" value="{{ insurance }}" readonly />
+    </div>
+    <div class="form-group form-text">
+        <label class="form-date-label" for="payment">Payment amount</label>
+        <input type="number" class="form-date-input" name="payment" value="{{ payment }}" readonly />
+    </div>
+    <div class="form-group form-text">
+        <label class="form-date-label" for="doctor">Doctor</label>
+        <input type="text" class="form-date-input" name="doctor" value="{{ doctor }}" readonly />
+        <input type="hidden" name="doctor_id" value="{{ doctor_id }}" readonly />
+    </div>
+    <div class="form-group form-select">
+        <label class="form-date-label" for="doctor">Appointment</label>
+        <select name="appointment">
+            {% for date in dates %}
+                <option value="{{ date.id }}">{{ date.date }}</option>
+            {% endfor %}
+            <!-- this needs to be changed to available dates send in context from views -->
+            <!-- <option value="1">Wednesday April 10th 2:00 PM - 3:00 PM, 2019</option> -->
+        </select>
+    </div>
     <!-- <div class="form-group form-date">
         <label class="form-date-label" for="exampledate1">Visit day</label>
         <input type="date" class="form-date-input" id="exampledate1">
