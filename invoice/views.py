@@ -1,10 +1,11 @@
 import io
 from django.shortcuts import render, get_object_or_404, reverse
-from django.http import HttpResponse, HttpResponseRedirect, FileResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from invoice.models import Client, Doctor, Invoice, Appointment
 from datetime import datetime
-from reportlab.pdfgen import canvas
+from .render import render_to_pdf
+from .pdf import draw_pdf
 
 
 @login_required(login_url='/admin/login/')
@@ -73,19 +74,17 @@ def makepdf(request):
     )
 
     # generating pdf
-    response = HttpResponse(content_type='application/pdf')
-    response['Content-Disposition'] = 'attachment; filename="invoice.pdf"'
-    # buffer = io.BytesIO()
-    pdf = canvas.Canvas(response)
-    pdf.drawString(10, 10, invoice_name)
-    pdf.drawString(10, 20, client_name)
-    pdf.drawString(10, 30, insurance)
-    pdf.drawString(10, 40, payment)
-    pdf.drawString(10, 50, doctor)
-    pdf.showPage()
-    pdf.save()
-
-    return response
+    params = {
+        'invoice_name': invoice_name,
+        'client_name': client_name,
+        'insurance': insurance,
+        'payment': payment,
+        'doctor': doctor,
+        'service_date': str(Appointment.objects.get(pk=date_id)),
+        'current_date': str(datetime.now().strftime('%a, %b %d, %Y')),
+    }
+    pdf = render_to_pdf('pdf.html', params)
+    return HttpResponse(pdf, content_type='application/pdf')
 
 def _get_available_dates(doctor, client_id, insurance):
     # get clients with the same insurance as the current client    
