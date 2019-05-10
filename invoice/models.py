@@ -11,7 +11,7 @@ class Invoice(models.Model):
     doctor = models.ForeignKey('Doctor', on_delete=models.CASCADE, default=0)
 
     def __str__(self):
-        return self.invoice_number
+        return self.invoice_name
 
 class Client(models.Model):
     name = models.CharField(max_length=200)
