@@ -1,0 +1,53 @@
+{% extends 'invoice/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block main %}
+{% if client_list %}
+
+<form method="POST" action="/invoice/getinfo">
+    {% csrf_token %}
+    <div class="form-group">
+        <small id="firstnameHelp" class="form-text text-muted">Client's name</small>
+        <label for="client">Client</label>
+        <select name="client" id="client">
+            {% for client in client_list %}
+                <option value="{{ client.id }}">{{ client.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <!-- <div class="form-group">
+        <label for="insurance">Insurance</label>
+        <select name="insurance" id="insurance" >
+            {% for client in client_list %}
+                <option value="{{ client.insurance }}">{{ client.insurance }}</option>
+            {% endfor %}
+        </select>
+        <small id="lastnameHelp" class="form-text text-muted">Client's last name</small>
+    </div>
+    <div class="form-group form-date">
+        <label class="form-date-label" for="exampledate1">Visit day</label>
+        <input type="date" class="form-date-input" id="exampledate1">
+    </div>
+    <div class="form-group form-time">
+        <label class="form-time-label" for="exampletime1">Appointment time began at</label>
+        <input type="time" class="form-time-input" id="exampletime1">
+    </div>
+    <div class="form-group form-time">
+        <label class="form-time-label" for="exampletime2">Appointment time ended at</label>
+        <input type="time" class="form-time-input" id="exampletime2">
+    </div>
+    <div class="form-group form-list">
+        <label class="form-list-label" for="doctor">with doctor</label>
+        <input type="select" class="form-list-input" id="doctor">
+    </div>
+    <div class="form-group form-list">
+        <label class="form-list-label" for="doctor">with doctor</label>
+        <input type="select" class="form-list-input" id="doctor">
+    </div> -->
+    <button type="submit" class="btn btn-primary">Next</button>
+    </form>
+{% else %}
+    <p>No clients are available.</p>
+{% endif %}
+
+{% endblock %}

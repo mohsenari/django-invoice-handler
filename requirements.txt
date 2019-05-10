@@ -1,0 +1,7 @@
+Django==2.2.1
+django-crispy-forms==1.7.2
+django-jet==1.0.8
+Pillow==6.0.0
+pytz==2019.1
+reportlab==3.5.21
+sqlparse==0.3.0
