@@ -4,17 +4,35 @@
   <head>
       <link rel="stylesheet" href="{% static 'invoice/bootstrap.min.css' %}" />
         <style type="text/css">
+            body, html {
+                height: 100%;
+            }
+            * {
+            box-sizing: border-box;
+            }
+            .bg {
+                filter: blur(8px);
+                height: 100vh;
+                background-image: url("{% static 'invoice/background.jpg' %}");
+                position: relative;
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: covr;
+            }
             .form-container {
-                display: block;
-                width: 600px;
-                padding-top: 1px;
-                padding-bottom: 5px;
-                padding-left: 10px;
-                padding-right: 10px;
-                margin-left: auto;
-                margin-right: auto;
-                margin-top: 20px;
-                box-shadow: #888 5px 5px 9px;
+                background-color: rgb(0,0,0); /* Fallback color */
+                background-color: rgba(0,0,0, 0.4); /* Black w/opacity/see-through */
+                color: white;
+                font-weight: bold;
+                border: 3px solid #f1f1f1;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                z-index: 2;
+                width: 40%;
+                padding: 20px;
+                text-align: center;
             }
             h3 {
                 padding-top: 5px;
@@ -34,6 +52,7 @@
         </style>
   </head>
   <body>
+    <div class="bg"></div>
     <div class="form-container">
         {% block main %}
         {% endblock %}
