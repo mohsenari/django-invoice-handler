@@ -6,17 +6,32 @@
     <style type="text/css">
         body {
             font-family: 'Tahoma';
+            font-size: 12px;
+        }
+        h2 {
+            font-size: 20px;
+        }
+        .title {
+            font-weight: bold;
+            font-size: 14px;
+            margin: 0;
+        }
+        #client_info {
+            margin-top: 100px;
         }
         #service_info {
             border: 1px solid #000;
             padding-left: 3px;
+            margin-top: 100px;
         }
         #service_info th {
             height: 20px;
             background-color: rgb(117, 193, 196);
+            padding-top: 2px;
         }
         #service_info td {
             height: 22px;
+            padding-top: 2px;
         }
 
         #total {
@@ -31,36 +46,35 @@
     </div>
     <div id='address'>
         9080 Yonge Street, Unit 8 <br />
-        Richmondhill, Ontarion <br />
+        Richmondhill, Ontario <br />
         L4J 0Y7 <br />
         Tel: 647-292-4772 <br />
     </div>
     <div id='client_info'>
-        <b>TO: </b> <br /> 
+        <span class='title'>TO: </span> <br /> 
         {{ client_name }} <br />
+        Insurance Provider: {{ insurance }} <br />
     </div>
 
     <table id='service_info'>
         <thead>
             <th>Date of Service</th>
             <th>Serivces Provided</th>
+            <th>Treatment Doctor</th>
             <th>Patient Fee</th>
         </thead>
         <tr>
             <td>{{ service_date }}</td>
             <td> Treatment Visit </td>
+            <td>{{ doctor }}</td>
             <td> ${{ payment }} </td>
         </tr>
     </table>
 
     <div id='total'>
-        <b>SUBTOTAL: </b>${{ payment }} <br />
+        <span class='title'>SUBTOTAL: </span>${{ payment }} <br />
         <br />
-        <b>TOTAL AMOUNT OWING: </b>${{ payment }} <br />
-    </div>
-
-    <div id='doctor'>
-        {{ doctor }}
+        <span class='title'>TOTAL AMOUNT OWING: </span>${{ payment }} <br />
     </div>
     
      
