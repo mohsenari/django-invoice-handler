@@ -18,7 +18,6 @@ from django.urls import path, include
 
 urlpatterns = [
     path('invoice/', include('invoice.urls')),
-    path('polls/', include('polls.urls')),
     path('admin/', admin.site.urls),
     path('jet/', include('jet.urls', 'jet')),
     path('jet/dashboard/', include('jet.dashboard.urls', 'jet-dashboard')),

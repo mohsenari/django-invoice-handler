@@ -5,10 +5,10 @@
 {% if client %}
 <h3> Client Information </h3>
 <hr />
-<form method="POST" action="/invoice/generateinvoice">
+<form method="POST" action="/invoice/generateinvoice" autocomplete="off">
     {% csrf_token %}
     <div class="form-group form-text">
-        <label class="form-date-label" for="client">Client name</label>
+        <label class="form-date-label" for="client">Client Name</label>
         <input type="text" class="form-date-input" name="client" id="name" value="{{ client.name }}" readonly>
         <input type="hidden" name="client_id" id="client_id" value="{{ client.id }}" readonly/>
     </div>
@@ -17,19 +17,30 @@
         <input type="text" class="form-date-input" name="insurance" value="{{ client.insurance }}" readonly>
     </div>
     <div class="form-group form-text">
-        <label class="form-date-label" for="payment">Payment amount</label>
-        <input type="number" class="form-date-input" name="payment">
+        <label class="form-date-label" for="payment">Payment Amount</label>
+        <input type="number" class="form-date-input" name="payment" placeholder="Enter amount">
     </div>
-    <div class="form-group form-select">
-    <label class="form-date-label" for="doctor">Doctor</label>
-    <select name="doctor" id="doctor">
+    <div class="form-group form-select" style="display: none">
+    <select name="doctorlist" id="doctorlist">
         {% for doctor in doctor_list %}
             <option value="{{ doctor.id }}">{{ doctor.name }}</option>
         {% endfor %}
     </select>
     </div>
+    <div class="form-group">
+        <label for="doctor">Select Doctor:</label>
+        <input type="text" class="form-control autocomplete" name="doctor" id="doctor" placeholder="Doctor Name">
+    </div>
     <button type="submit" class="btn btn-primary">Next</button>
     </form>
+    <script>
+        var x = document.getElementById("doctorlist"); 
+        var optionVal = new Array();
+        for (i = 0; i < x.length; i++) { 
+            optionVal.push(x.options[i].text);
+        }
+        autocomplete(document.getElementById("doctor"), optionVal);
+    </script>
 {% else %}
     <p>No clients are available.</p>
 {% endif %}

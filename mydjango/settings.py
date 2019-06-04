@@ -35,7 +35,6 @@ INSTALLED_APPS = [
     'jet.dashboard',
     'crispy_forms',
     'invoice.apps.InvoiceConfig',
-    'polls.apps.PollsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
