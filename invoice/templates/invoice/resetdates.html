@@ -5,7 +5,7 @@
 {% block main %}
 
 <h3> List of available appointment dates successfully reset or imported. </h3>
-<form method="POST" action="/invoice/generateinvoice" autocomplete="off">
+<!-- <form method="POST" autocomplete="off"> -->
     {% csrf_token %}
     <div class="form-group form-text">
         <label class="form-date-label" for="start_date">Start Date</label>
@@ -23,13 +23,10 @@
         <label class="form-date-label" for="end_hour">Finish work hour</label>
         <input type="number" class="form-date-input" name="end_hour" value="{{ end_hour }}" readonly>
     </div>
-    <button type="submit" class="btn btn-primary" id="close" onclick="closeTab()">Close</button>
-</form>
-<script>
-    function closeTab() {
-        window.open('','_parent','');
-        window.close();
-    }
-</script>
+    <a href="/invoice">
+        <button type="submit" class="btn btn-primary" id="back" >Back</button>
+    </a>
+<!-- </form> -->
+
 
 {% endblock %}
