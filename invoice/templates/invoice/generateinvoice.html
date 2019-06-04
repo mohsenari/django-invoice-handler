@@ -8,7 +8,7 @@
         Invoice generator
     </h1>
 
-<form method="POST" action='/invoice/makepdf'>
+<form method="POST" action="/invoice/makepdf" autocomplete="off">
     {% csrf_token %}
     <div class="form-group form-text">
         <label class="form-date-label" for="client">Invoice title</label>
@@ -32,30 +32,28 @@
         <input type="text" class="form-date-input" name="doctor" value="{{ doctor }}" readonly />
         <input type="hidden" name="doctor_id" value="{{ doctor_id }}" readonly />
     </div>
-    <div class="form-group form-select">
-        <label class="form-date-label" for="doctor">Appointment</label>
-        <select name="appointment">
+    <div class="form-group form-select" style="display: none">
+        <select name="appointmentlist" id="appointmentlist">
             {% for date in dates %}
                 <option value="{{ date.id }}">{{ date.date }}</option>
             {% endfor %}
-            <!-- this needs to be changed to available dates send in context from views -->
-            <!-- <option value="1">Wednesday April 10th 2:00 PM - 3:00 PM, 2019</option> -->
         </select>
     </div>
-    <!-- <div class="form-group form-date">
-        <label class="form-date-label" for="exampledate1">Visit day</label>
-        <input type="date" class="form-date-input" id="exampledate1">
+    <div class="form-group">
+        <label for="appointment">Appointment:</label>
+        <input type="text" class="form-control autocomplete" name="appointment" id="appointment" placeholder="Select Appointment (e.g., April 1st, 2019, 4 p.m.)">
     </div>
-    <div class="form-group form-time">
-        <label class="form-time-label" for="exampletime1">Appointment time began at</label>
-        <input type="time" class="form-time-input" id="exampletime1">
-    </div>
-    <div class="form-group form-time">
-        <label class="form-time-label" for="exampletime2">Appointment time ended at</label>
-        <input type="time" class="form-time-input" id="exampletime2">
-    </div> -->
     <button type="submit" class="btn btn-primary">Genarate Invoice</button>
     </form>
+    <script>
+        var x = document.getElementById("appointmentlist"); 
+        var optionVal = new Array();
+        for (i = 0; i < x.length; i++) { 
+            optionVal.push(x.options[i].text);
+            console.log(x.options[i].text);
+        }
+        autocomplete(document.getElementById("appointment"), optionVal);
+    </script>
 {% else %}
 <h1>
     no invoice number found

@@ -72,7 +72,7 @@
         .autocomplete {
             /*the container must be positioned relative:*/
             position: relative;
-            display: inline-block;
+            display: inline;
         }
 
         input {
@@ -83,27 +83,31 @@
         }
 
         .autocomplete-items {
-            position: relative;
-            border: 1px solid #d4d4d4;
+            position: absolute;
+            /* border: 1px solid #d4d4d4; */
             border-bottom: none;
             border-top: none;
+            display: block;
             z-index: 99;
             /*position the autocomplete items to be the same width as the container:*/
-            top: 100%;
+            /* top: 100%; */
             left: 0;
             right: 0;
+            padding-left: 20px;
+            padding-right: 20px;
         }
 
         .autocomplete-items div {
             padding: 10px;
             cursor: pointer;
-            background-color: rgba(0, 0, 0, 0.4);
+            background-color: rgb(255, 255, 255);
+            color: black;
             border-bottom: 1px solid #d4d4d4;
         }
 
         .autocomplete-items div:hover {
             /*when hovering an item:*/
-            background-color: #5e5e5e;
+            background-color: #9c9c9c;
         }
 
         .autocomplete-active {

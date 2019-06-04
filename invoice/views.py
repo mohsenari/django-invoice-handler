@@ -4,6 +4,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from invoice.models import Client, Doctor, Invoice, Appointment
 from datetime import datetime
+from dateutil import parser
 from .render import render_to_pdf
 
 
@@ -35,16 +36,17 @@ def generateinvoice(request):
     # print('client id is: ', client_id)
     insurance = request.POST['insurance']
     payment = request.POST['payment']
-    doctor = Doctor.objects.get(pk=request.POST['doctor'])
-    available_dates = _get_available_dates(doctor=request.POST['doctor'], client_id=client_id, insurance=insurance)
+    doctor = Doctor.objects.get(name=request.POST['doctor'])
+    print(doctor.id)
+    available_dates = _get_available_dates(doctor_id=doctor.id, client_id=client_id, insurance=insurance)
     context = {
         'client': client,
         'insurance': insurance,
         'payment': payment,
-        'doctor': doctor,
+        'doctor': request.POST['doctor'],
         'dates': available_dates,
         'client_id': client_id,
-        'doctor_id': request.POST['doctor'],
+        'doctor_id': doctor.id,
     }
     return HttpResponse(render(request, 'invoice/generateinvoice.html', context))
 
@@ -52,8 +54,7 @@ def makepdf(request):
     # invoice model info
     client_id = request.POST['client_id']
     doctor_id = request.POST['doctor_id']
-    print(client_id)
-    date_id = request.POST['appointment']
+    date = Appointment.objects.get(date=parser.parse(request.POST['appointment']))
     # invoice pdf info
     invoice_name = request.POST['invoice_name']
     client_name = request.POST['client']
@@ -63,13 +64,13 @@ def makepdf(request):
 
     print(invoice_name, client_name, insurance, payment, doctor)
 
-    print(invoice_name, date_id, client_id, doctor_id)
+    print(invoice_name, date.id, client_id, doctor_id)
     # save invoice in db
     Invoice.objects.create(
         invoice_name = invoice_name,
-        pub_date_id = date_id,
+        pub_date_id = date.id,
         client_id = client_id,
-        doctor_id = doctor_id
+        doctor_id = doctor_id,
     )
 
     # generating pdf
@@ -79,17 +80,17 @@ def makepdf(request):
         'insurance': insurance,
         'payment': payment,
         'doctor': doctor,
-        'service_date': str(Appointment.objects.get(pk=date_id)),
+        'service_date': request.POST['appointment'],
         'current_date': str(datetime.now().strftime('%a, %b %d, %Y')),
     }
     pdf = render_to_pdf('pdf.html', params)
     return HttpResponse(pdf, content_type='application/pdf')
 
-def _get_available_dates(doctor, client_id, insurance):
+def _get_available_dates(doctor_id, client_id, insurance):
     # get clients with the same insurance as the current client    
     clients_in_insurance = Client.objects.filter(insurance=insurance)
     # get all the appointments with the same doctor and same insurance
-    unavailable_dates = Invoice.objects.filter(doctor=doctor, client_id__in=clients_in_insurance).values('pub_date')
+    unavailable_dates = Invoice.objects.filter(doctor=doctor_id, client_id__in=clients_in_insurance).values('pub_date')
     #exclude unavailable dates    
     available_dates = Appointment.objects.exclude(id__in=unavailable_dates)
     return available_dates
