@@ -4,19 +4,33 @@
 {% if client_list %}
 <h3> Select Client </h3>
 <hr />
-<form method="POST" action="/invoice/getinfo">
+<form method="POST" autocomplete="off" action="/invoice/getinfo">
     {% csrf_token %}
-    <div class="form-group">
+    {{ form|crispy }}
+    <div style="display: none;">
         <!-- <small id="firstnameHelp" class="form-text text-muted">Client's name</small> -->
         <label for="client">Client</label>
-        <select name="client" id="client">
+        <select name="client" id="clientlist">
             {% for client in client_list %}
                 <option value="{{ client.id }}">{{ client.name }}</option>
             {% endfor %}
         </select>
     </div>
+    <div class="form-group">
+        <label for="client">Select Client:</label>
+        <input type="text" class="form-control autocomplete" id="client" placeholder="Client Name">
+    </div>
     <button type="submit" class="btn btn-primary">Next</button>
 </form>
+<script>
+    var x = document.getElementById("clientlist"); 
+    var optionVal = new Array();
+    for (i = 0; i < x.length; i++) { 
+        optionVal.push(x.options[i].text);
+        console.log(x.options[i].text);
+    }
+    autocomplete(document.getElementById("client"), optionVal);
+</script>
 {% else %}
 <p>No clients are available.</p>
 {% endif %}
