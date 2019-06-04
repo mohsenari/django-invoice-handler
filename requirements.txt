@@ -10,3 +10,4 @@ sqlparse==0.3.0
 webencodings==0.5.1
 xhtml2pdf==0.2.3
 python-dateutil==1.5
+holidays==0.9.10
