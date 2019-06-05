@@ -1,5 +1,4 @@
 import io
-import holidays
 from django.shortcuts import render, get_object_or_404, reverse
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
@@ -8,6 +7,7 @@ from datetime import datetime, date
 from dateutil import parser
 from dateutil.rrule import rrule, HOURLY
 from .render import render_to_pdf
+import holidays
 
 
 @login_required(login_url='/admin/login/')
